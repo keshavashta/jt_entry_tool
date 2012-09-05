@@ -6,8 +6,26 @@
  * Time: 3:13 PM
  * To change this template use File | Settings | File Templates.
  */
-class Judgement extends CI_Model
+class Judgement_Model extends CI_Model
 {
+    public $id;
+    public $keycode;                //this keycode is an alphanumeric string
+    public $court;
+    public $appellant;
+    public $respondent;
+
+    public $case_date;
+
+    /**
+     * @var : array
+     */
+    public $citation;
+
+    public $judges;
+    public $advocates;
+    public $case_number;
+    public $headnote;
+    public $judgement;
 
     public $page_count = 10;
 
