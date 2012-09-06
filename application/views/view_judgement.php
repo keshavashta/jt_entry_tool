@@ -18,11 +18,23 @@
     <div class="span12">
         <p style="text-align: justify"><b> Respondant:</b> <?php echo $judgement->Respondent ?></p>
     </div>
+<!--    <div class="span12">-->
+<!--        <p style="text-align: justify"><b> File Name:</b> --><?php //echo $judgement->FileName ?><!--</p>-->
+<!--    </div>-->
     <div class="span12">
-        <p style="text-align: justify"><b> File Name:</b> <?php echo $judgement->FileName ?></p>
+        <p style="text-align: justify"><b> Headnote:</b> <?php echo  get_line_seperated_text($judgement->Headnote); ?></p>
     </div>
     <div class="span12">
-        <p style="text-align: justify"><b> Judgement:</b> <?php echo  str_replace("\n","</br>" , $judgement->Judgement); ?></p>
+        <p style="text-align: justify"><b> Judgement:</b> <?php echo  get_line_seperated_text($judgement->Judgement); ?></p>
     </div>
+    <?php foreach($citation as $row) {?>
+    <div class="span12">
+        <p ><b> Journal:</b> <?php echo  $row->Journal ?>
+            <b>  Year:</b> <?php echo  $row->Year ?>
+            <b>  Page:</b> <?php echo  $row->Page ?>
+            <b>  Volume:</b> <?php echo  $row->Volume ?>
+        </p>
+    </div>
+    <?php }?>
 
 </div>

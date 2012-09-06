@@ -9,7 +9,7 @@
 class Judgement_Model extends CI_Model
 {
     public $id;
-    public $keycode;                //this keycode is an alphanumeric string
+    public $keycode; //this keycode is an alphanumeric string
     public $court;
     public $appellant;
     public $respondent;
@@ -26,7 +26,6 @@ class Judgement_Model extends CI_Model
     public $case_number;
     public $headnote;
     public $judgement;
-
     public $page_count = 10;
 
     public function get_judgement_count()
@@ -35,29 +34,29 @@ class Judgement_Model extends CI_Model
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
-
     }
+
     public function __toString()
     {
         return "";
     }
-    public function getResults($page_number = null)
+
+    public function getResults($starting_index, $end_index)
     {
-        if (empty($page_number)) {
-            $page_number = 0;
-        }
+
         $this->db->select('Keycode,Date,Appellant,Respondent,FileName');
         $this->db->from('judgements');
-        $this->db->limit(($page_number+1)*$this->page_count, $page_number * $this->page_count);
+        $this->db->limit($end_index, $starting_index);
         $this->db->order_by('Date', 'desc');
         $query = $this->db->get()->result();
         return $query;
     }
 
-    public function get_judgement($keycode){
+    public function get_judgement($keycode)
+    {
         $this->db->select('*');
         $this->db->from('judgements');
-        $this->db->where('Keycode',$keycode);
+        $this->db->where('Keycode', $keycode);
         $result = $this->db->get()->row();
         return $result;
     }
@@ -65,11 +64,35 @@ class Judgement_Model extends CI_Model
     public function update_judgement($data)
     {
         $this->db->where('keycode', $data['keycode']);
-        $this->db->update('judgement', $data);
+        $this->db->update('judgements', $data);
+    }
+
+
+    public function save_judgement()
+    {
+        $judgement_data = array();
+        $judgement_data['keycode'] = $this->keycode;
+        $judgement_data['court'] = $this->court;
+        $judgement_data['appellant'] = $this->appellant;
+        $judgement_data['respondent'] = $this->respondent;
+        $judgement_data['date'] = $this->case_date;
+        $judgement_data['judges'] = $this->judges;
+        $judgement_data['advocates'] = $this->advocates;
+        $judgement_data['caseno'] = $this->case_number;
+        $judgement_data['headnote'] = $this->headnote;
+        $judgement_data['judgement'] = $this->judgement;
+        foreach ($this->citation as $citation) {
+            $citation->save_citation();
+        }
+        $sql = "INSERT  INTO judgements (keycode, court, appellant, respondent,date,judges,advocates,caseno,headnote,judgement) VALUES (?,?,?,?,?,?,?,?,?,?);";
+        $this->db->query($sql, array($judgement_data['keycode'],  "SC",  $this->appellant, $this->respondent,$this->case_date->format('Y-m-d H:i:s'),
+            $this->judges, $this->advocates ,$this->case_number,  $this->headnote,$this->judgement));
+
     }
 
     public function insert_judgement($data)
     {
-        $this->db->insert('judgement', $data);
+        $this->db->insert('judgements', $data);
+        return $this->db->insert_id();
     }
 }

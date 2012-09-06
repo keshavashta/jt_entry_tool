@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://jt.localhost.com';
+$config['base_url']	= 'http://jtentrytool.localhost.com/';
 
 /*
 |--------------------------------------------------------------------------

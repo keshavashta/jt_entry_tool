@@ -64,7 +64,7 @@ $autoload['libraries'] = array('template','database','jt_file_loader');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','string');
+$autoload['helper'] = array('url','string','jt_html_helper','form');
 
 
 /*

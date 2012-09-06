@@ -8,8 +8,9 @@
  */
 class Test extends CI_Controller {
     function index() {
-        $instance = new Judgement();
-        var_dump($instance->get_judgement_count());
+        $instance = new Citation_Model();
+        $data=array('keycode'=>"1b91d2f9200cda2b434e19a7df5842d0");
+        $instance->delete_citation($data);
     }
 
 
