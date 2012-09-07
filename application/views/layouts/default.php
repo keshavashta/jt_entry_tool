@@ -9,6 +9,11 @@
         body {
             padding-top: 60px;
             padding-bottom: 40px;
+            font-size: 12px;
+        }
+
+        label, input, button, select, textarea {
+            font-size: 12px;
         }
     </style>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
@@ -27,19 +32,30 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="<?php echo base_url("welcome");?>">JT Entry Tool</a>
+
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li class="active"><a href="<?php echo base_url("welcome/results");?>">Results</a></li>
-                    <li><a href="<?php echo base_url("welcome");?>">Add Text File Records</a></li>
+                    <li class="active"><a href="<?php echo base_url("welcome/results");?>">List of Judgements</a></li>
+                    <li><a href="<?php echo base_url("welcome/upload");?>">Upload Judgements</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <form class="form-inline" method="post" action="<?php echo base_url("/welcome/change_court"); ?>">
+                <label>The selected court is </label>
+                <?php echo form_dropdown("court", get_courts(), get_selected_court_id()) ?>
+                <input class="btn" type="submit" value="Change Court"/>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="container">
-
     <?php echo $template['body']; ?>
 
     <hr>

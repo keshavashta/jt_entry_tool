@@ -8,18 +8,15 @@
  */
 
 //todo: write all assumption here.
-class JT_File_Loader
-{
+class JT_File_Loader {
 
-    public function __construct()
-    {
+    public function __construct() {
 
     }
 
     private $counter = 0;
 
-    public function parseJudgements($file_path)
-    {
+    public function parseJudgements($file_path) {
         //if file does not exist, return null
         if (!file_exists($file_path))
             return array();
@@ -38,13 +35,11 @@ class JT_File_Loader
         return $judgements;
     }
 
-    private function split_files($file_data)
-    {
+    private function split_files($file_data) {
         return explode("**********", $file_data);
     }
 
-    private function parse_judgement($data)
-    {
+    private function parse_judgement($data) {
         $judgement = new Judgement_Model();
         $data_lines = explode("\n", $data);
 
@@ -83,8 +78,7 @@ class JT_File_Loader
         return $judgement;
     }
 
-    private function get_citations(array $data_lines, $keycode)
-    {
+    private function get_citations(array $data_lines, $keycode) {
         $citation_text = $data_lines[0];
 
         $citation_lines = explode(' ', $citation_text);
@@ -109,8 +103,7 @@ class JT_File_Loader
      * @param array $data_lines
      * @return array of appellant and respondent
      */
-    private function get_party(array $data_lines)
-    {
+    private function get_party(array $data_lines) {
         if (sizeof($data_lines) == 0)
             return array("", "");
 
@@ -126,8 +119,7 @@ class JT_File_Loader
         return $data;
     }
 
-    private function get_case_number(array $data_lines)
-    {
+    private function get_case_number(array $data_lines) {
         if (sizeof($data_lines) < 2)
             return "";
 
@@ -151,8 +143,7 @@ class JT_File_Loader
         return $case_number;
     }
 
-    private function get_judges(array $data_lines)
-    {
+    private function get_judges(array $data_lines) {
         $judges = trim(
             str_replace(",", "",
                 substr($data_lines[$this->counter], 0, strrpos($data_lines[$this->counter], " "))));
@@ -160,8 +151,7 @@ class JT_File_Loader
         return $judges;
     }
 
-    private function get_date(array $data_lines)
-    {
+    private function get_date(array $data_lines) {
         $date = $data_lines[$this->counter];
         $date = trim(str_ireplace("dt.", '', $date));
         $date = new DateTime($date);
@@ -170,8 +160,7 @@ class JT_File_Loader
         return $date;
     }
 
-    private function get_advocates(array $data_lines)
-    {
+    private function get_advocates(array $data_lines) {
         $start_counter = 0;
 
         while ($start_counter < sizeof($data_lines)) {
@@ -207,8 +196,7 @@ class JT_File_Loader
         return $advocates;
     }
 
-    private function get_headnote(array $data_lines)
-    {
+    private function get_headnote(array $data_lines) {
 
         $end_counter = $this->counter;
 
@@ -230,8 +218,7 @@ class JT_File_Loader
         return $headnote;
     }
 
-    private function get_judgement(array $data_lines)
-    {
+    private function get_judgement(array $data_lines) {
         $judgement = "";
         while ($this->counter < sizeof($data_lines)) {
             $judgement .= $data_lines[$this->counter] . "\n";
@@ -241,8 +228,7 @@ class JT_File_Loader
         return $judgement;
     }
 
-    private function check_ends_with($data, $ends_with)
-    {
+    private function check_ends_with($data, $ends_with) {
         if (strlen($data) < strlen($ends_with))
             return false;
 

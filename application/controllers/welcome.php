@@ -1,11 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller
-{
+class Welcome extends CI_Controller {
 
-
-    public function results($page = null)
-    {
+    public function results($page = null) {
         if (empty($page))
             $page = 0;
         $page_Count = 10;
@@ -39,21 +36,19 @@ class Welcome extends CI_Controller
 
     }
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
-        $this->load->helper(array('form', 'url'));
     }
 
-    function index()
-    {
-        $this->load->helper(array('form', 'url'));
+    function index() {
+        redirect(base_url("/welcome/results"));
+    }
+
+    function upload() {
         $this->template->build('file_loader', array('error' => ' '));
-
     }
 
-    function do_upload()
-    {
+    function do_upload() {
         $config['upload_path'] = './assets/uploads';
         $config['allowed_types'] = 'txt';
         $config['max_size'] = '10240';
@@ -69,7 +64,6 @@ class Welcome extends CI_Controller
             $data = array('upload_data' => $this->upload->data());
             $file_path = $data['upload_data']['full_path'];
             $loader = new JT_File_Loader();
-            $judgements = array();
             $judgements = $loader->parseJudgements($file_path);
 
             if (!empty($judgements)) {
@@ -78,15 +72,21 @@ class Welcome extends CI_Controller
                 }
                 $message = "Judgement Processed " . sizeof($judgements);
 
-            }
-            else{
-                $message = "0 Judgement Processed " ;
+            } else {
+                $message = "0 Judgement Processed ";
             }
             $result = array();
             $result['message'] = $message;
             $this->template->build('processed_message', $result);
         }
     }
+
+    function change_court() {
+        $court = $this->input->post('court');
+        $this->session->set_userdata(array('court' => $court));
+        redirect("/");
+    }
+
 }
 
 /* End of file welcome.php */

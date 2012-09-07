@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://jtentrytool.localhost.com/';
+$config['base_url']	= 'http://jt.localhost.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'rWe0e5jg70TlDPcl5CwYrWe0e5jg70TlDPcl5CwYrWe0e5jg70TlDPcl5CwY';
 
 /*
 |--------------------------------------------------------------------------
